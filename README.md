@@ -1,6 +1,6 @@
 # PL/SQL Map
 A java-like map construct. This collection type can be used in PL/SQL code also in oracle object types.
-My motivation was to provide a way in which i can use a map within an Oracle object types.
+My motivation was to provide a way in which i can use an iterable map within an Oracle object types.
 
 The initial code was developed at Airpas Aviation AG, who kindly assented to its publication.
 
