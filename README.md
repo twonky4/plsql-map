@@ -12,7 +12,7 @@ Execute the content of the files in the following order:
 * T_MAP_TYPE.sql
 * T_MAP_BODY.sql
 
-Note: To update the underlying type t_map_entry the types t_map_table and t_map needs to be deleted.
+Note: To update the underlying type `t_map_entry` the types `t_map_table` and `t_map` needs to be deleted.
 
 ## Usage
 ### Simple use
