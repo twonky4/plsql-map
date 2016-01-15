@@ -71,7 +71,7 @@ end;
 ```
 
 ## Test
-In order to make the unit tests run you need to execute the scripts `PCK_UNIT_TEST.sql` and `PCK_UNIT_TEST_BODY.sql`. The tests can be started with by following the command:
+In order to make the unit tests runable you need to execute the scripts `PCK_UNIT_TEST.sql` and `PCK_UNIT_TEST_BODY.sql`. The tests can be started with by following the command:
 ```sql
 begin
   pck_unit_test.test();
