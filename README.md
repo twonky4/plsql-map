@@ -30,20 +30,42 @@ end;
 ### To iterate through the map you can use two ways
 #### while
 ```sql
-l_map.iterate(); -- to reset pointer that changed by previous iteration, optional
-while l_map.hasNextEntry()
-loop
-  l_entry := l_map.nextEntry();
-  dbms_output.put_line(l_entry.getKey() || ' -> ' || l_entry.getValue());
-end loop;
+declare
+  l_map t_map := t_map();
+  l_entry t_map_entry;
+begin
+  l_map.put('foo', 'bar');
+  l_map.put('ping', 'pong');
+    
+  l_map.iterate(); -- to reset pointer that changed by previous iteration, optional
+  while l_map.hasNextEntry()
+  loop
+    l_entry := l_map.nextEntry();
+    dbms_output.put_line(l_entry.getKey() || ' -> ' || l_entry.getValue());
+  end loop;
+
+  -- output: foo -> bar
+  -- output: ping -> pong
+end;
 ```
 #### do-while
 ```sql
-l_entry := l_map.firstEntry(); 
-loop
-  dbms_output.put_line(l_entry.getKey() || ' -> ' || l_entry.getValue());
+declare
+  l_map t_map := t_map();
+  l_entry t_map_entry;
+begin
+  l_map.put('foo', 'bar');
+  l_map.put('ping', 'pong');
 
-  l_entry := l_map.nextEntry();
-  exit when not l_map.hasNextEntry();
-end loop;
+  l_entry := l_map.firstEntry();
+  loop
+    dbms_output.put_line(l_entry.getKey() || ' -> ' || l_entry.getValue());
+
+    exit when not l_map.hasNextEntry();
+    l_entry := l_map.nextEntry();
+  end loop;
+
+  -- output: foo -> bar
+  -- output: ping -> pong
+end;
 ```

@@ -29,8 +29,8 @@ create or replace type t_map as object (
  *    loop
  *      dbms_output.put_line(l_entry.getKey() || ' -> ' || l_entry.getValue());
  *
- *      l_entry := l_map.nextEntry();
  *      exit when not l_map.hasNextEntry();
+ *      l_entry := l_map.nextEntry();
  *    end loop;
  *
  * See object types: t_map_table, t_map_entry
