@@ -69,3 +69,11 @@ begin
   -- output: ping -> pong
 end;
 ```
+
+## Test
+In order to make the unit tests run you need to execute the scripts `PCK_UNIT_TEST.PCKS` and `PCK_UNIT_TEST.PCKB`. The tests can be started with by following the commando:
+```sql
+begin
+  pck_unit_test.test();
+end;
+```
