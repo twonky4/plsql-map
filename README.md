@@ -75,5 +75,6 @@ In order to make the unit tests runnable you need to execute the scripts `PCK_UN
 ```sql
 begin
   pck_unit_test.test();
+  -- should output: all test successful
 end;
 ```

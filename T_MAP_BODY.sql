@@ -13,7 +13,7 @@ create or replace type body t_map is
     l_i := m_map.first();
     while (l_i is not null)
     loop
-      if m_map(l_i).m_key = pi_key then
+      if m_map(l_i).m_key = pi_key or (pi_key is null and m_map(l_i).m_key is null) then
         return m_map(l_i).m_value;
       end if;
 
@@ -46,7 +46,7 @@ create or replace type body t_map is
     l_i := m_map.first();
     while (l_i is not null)
     loop
-      if m_map(l_i).m_key = pi_key then
+      if m_map(l_i).m_key = pi_key or (pi_key is null and m_map(l_i).m_key is null)then
         m_map.delete(l_i);
         exit;
       end if;
@@ -75,7 +75,23 @@ create or replace type body t_map is
     l_i := m_map.first();
     while (l_i is not null)
     loop
-      if m_map(l_i).m_key = pi_key then
+      if m_map(l_i).m_key = pi_key or (pi_key is null and m_map(l_i).m_key is null) then
+        return true;
+      end if;
+
+      l_i := m_map.next(l_i);
+    end loop;
+
+    return false;
+  end;
+
+  member function containsValue(pi_value varchar2) return boolean is
+    l_i number;
+  begin
+    l_i := m_map.first();
+    while (l_i is not null)
+    loop
+      if m_map(l_i).m_value = pi_value or (pi_value is null and m_map(l_i).m_value is null) then
         return true;
       end if;
 
@@ -124,6 +140,15 @@ create or replace type body t_map is
     return m_map(m_iterationCounter);
   end;
 
+  member procedure nextEntry is
+  begin
+    if m_iterationCounter = -1 then
+      m_iterationCounter := self.m_map.first();
+    else
+      m_iterationCounter := self.m_map.next(m_iterationCounter);
+    end if;
+  end;
+
   member procedure iterate is
   begin
     m_iterationCounter := -1;
@@ -143,6 +168,35 @@ create or replace type body t_map is
     end if;
 
     return true;
+  end;
+
+  member procedure removeCurrent is
+    l_iterationCounter number := m_iterationCounter;
+  begin
+    if l_iterationCounter = -1 then
+      l_iterationCounter := m_map.first();
+    end if;
+
+    if l_iterationCounter is not null and m_map.exists(l_iterationCounter) then
+      m_map.delete(l_iterationCounter);
+    end if;
+  end;
+
+  member function removeCurrent(self in out t_map) return t_map_entry is
+    l_entry t_map_entry;
+    l_iterationCounter number := m_iterationCounter;
+  begin
+    if l_iterationCounter = -1 then
+      l_iterationCounter := self.m_map.first();
+    end if;
+
+    if l_iterationCounter is not null and m_map.exists(l_iterationCounter) then
+      l_entry := m_map(l_iterationCounter);
+      m_map.delete(l_iterationCounter);
+      return l_entry;
+    end if;
+
+    return null;
   end;
 end;
 /

@@ -83,6 +83,11 @@ create or replace type t_map as object (
   member function containsKey(pi_key varchar2) return boolean,
 
   /**
+   * Returns true if this map maps one or more keys to the specified value.
+   */
+  member function containsValue(pi_value varchar2) return boolean,
+
+  /**
    * Returns the number of key-value mappings in this map.
    */
   member function entryCount return number,
@@ -106,6 +111,12 @@ create or replace type t_map as object (
   member function nextEntry(self in out t_map) return t_map_entry,
 
   /**
+   * Iterate to the next entry. This function may be called repeatedly to iterate through the map.
+   * To begin from the first map entry again call function iterate().
+   */
+  member procedure nextEntry,
+
+  /**
    * Re-/Inialize iteration counter. So functions nextEntry() and hasNextEntry() will point to first
    * entry of the map.
    */
@@ -115,6 +126,20 @@ create or replace type t_map as object (
    * Returns true if for the actual map iteration another entry is available. To begin from the
    * first map entry again call function iterate().
    */
-  member function hasNextEntry return boolean
+  member function hasNextEntry return boolean,
+
+  /**
+   * Removes from the map the last element returned by the methode nextEntry(). This method can be
+   * called only once per call to nextEntry(). If iteration is not initialed the first entry will
+   * be removed.
+   */
+  member procedure removeCurrent,
+
+  /**
+   * Removes from the map the last element returned by the methode nextEntry(). This method can be
+   * called only once per call to nextEntry(). Returns the removed entry or null, if entry already
+   * deleted. If iteration is not initialed the first entry will be removed.
+   */
+  member function removeCurrent(self in out t_map) return t_map_entry
 );
 /
