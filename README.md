@@ -96,7 +96,7 @@ begin
   -- entries 1 changed
 end;
 ```
-### additional check methods
+### additional check functions
 ```sql
 declare
   l_map t_map := t_map();
@@ -119,7 +119,7 @@ begin
   end if;
 
   -- entry count
-  dbms_output.put_line(l_map.entryCount || ' map entries exists');
+  dbms_output.put_line(l_map.entryCount() || ' map entries exists');
 end;
 ```
 ## Test
