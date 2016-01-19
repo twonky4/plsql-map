@@ -20,10 +20,14 @@ Note: To update the underlying type `t_map_entry` the types `t_map_table` and `t
 declare
   l_map t_map := t_map();
 begin
+  -- fill
   l_map.put('foo', 'bar');
+
+  -- read
   dbms_output.put_line(l_map.get('foo'));
   -- output: bar
 
+  -- delete
   l_map.remove('foo');
 end;
 ```
@@ -70,6 +74,28 @@ begin
 end;
 ```
 
+### remove While iteration
+```sql
+declare
+  l_map t_map := t_map();
+  l_entry t_map_entry;
+begin
+  l_map.put('foo', 'bar');
+  l_map.put('ping', 'test');
+  l_map.put('pong', 'test');
+
+  l_map.iterate();
+  while l_map.hasNextEntry()
+  loop
+    l_entry := l_map.nextEntry();
+    if l_entry.getValue() = 'test' then
+      l_map.removeCurrent();
+    end if;
+  end loop;
+
+  -- entries 2 & 3 deleted
+end;
+```
 ## Test
 In order to make the unit tests runnable you need to execute the scripts `PCK_UNIT_TEST.sql` and `PCK_UNIT_TEST_BODY.sql`. The tests can be started with by following the command:
 ```sql
