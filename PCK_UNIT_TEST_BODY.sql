@@ -414,6 +414,18 @@ is
     assertFalse(l_map.containsKey('key3'));
   end shouldRemoveTwiceButDoNothing;
 
+  procedure shouldNotEditMapOnChangeEntry is
+    l_map t_map := t_map();
+    l_entry t_map_entry;
+  begin
+    l_map.put('key1', 'value1');
+
+    l_entry := l_map.firstEntry();
+    l_entry.m_value := 'value2';
+
+    assert('value1', l_map.get('key1'));
+  end shouldNotEditMapOnChangeEntry;
+
   procedure test is
   begin
     shouldGetValueForOneEntry();
@@ -447,6 +459,7 @@ is
     shouldRemoveCurrentNotInitial();
     shouldRemoveNothingOnEmptyMap();
     shouldRemoveTwiceButDoNothing();
+    shouldNotEditMapOnChangeEntry();
 
     dbms_output.put_line('all test successful');
   end test;
