@@ -15,7 +15,10 @@ is
   procedure assert(l_expected varchar2, l_actual varchar2) is
     l_exceptionText varchar2(4000);
   begin
-    if l_expected is null and l_actual is not null or l_expected != l_actual then
+    if (l_expected is null and l_actual is not null)
+      or (l_expected is not null and l_actual is null)
+      or l_expected != l_actual
+    then
       l_exceptionText := 'expected:';
       case
         when l_expected is null then
@@ -423,7 +426,7 @@ is
     l_entry := l_map.firstEntry();
     l_entry.m_value := 'value2';
 
-    assert('value1', l_map.get('key2'));
+    assert('value1', l_map.get('key1'));
   end;
 
   procedure shouldEditMapOnChangeEntry is
@@ -435,7 +438,21 @@ is
     l_map.nextEntry();
     l_map.setCurrentValue('value2');
 
-    assert('value1', l_map.get('key2'));
+    assert('value2', l_map.get('key1'));
+  end;
+
+  procedure shouldNotEditRemovedEntry is
+    l_map t_map := t_map();
+  begin
+    l_map.put('key1', 'value1');
+
+    l_map.iterate();
+    l_map.nextEntry();
+    l_map.removeCurrent();
+    l_map.setCurrentValue('value2');
+
+    assertFalse(l_map.containsKey('key1'));
+    assertFalse(l_map.containsValue('value1'));
   end;
 
   procedure test is
@@ -473,6 +490,7 @@ is
     shouldRemoveTwiceButDoNothing();
     shouldNotEditMapOnChangeEntry();
     shouldEditMapOnChangeEntry();
+    shouldNotEditRemovedEntry();
 
     dbms_output.put_line('all test successful');
   end;
