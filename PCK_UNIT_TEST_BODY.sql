@@ -5,12 +5,12 @@ is
     pragma exception_init(COMPARISON_FAILURE, -20100);
   begin
     raise_application_error(-20100, l_exceptionText);
-  end fail;
+  end;
 
   procedure fail is
   begin
     fail(null);
-  end fail;
+  end;
 
   procedure assert(l_expected varchar2, l_actual varchar2) is
     l_exceptionText varchar2(4000);
@@ -32,7 +32,7 @@ is
       end case;
       fail(l_exceptionText);
     end if;
-  end assert;
+  end;
 
   procedure assertFalse(l_actual boolean) is
     l_text varchar(5);
@@ -46,12 +46,12 @@ is
         l_text := null;
     end case;
     assert('false', l_text);
-  end assertFalse;
+  end;
 
   procedure assertTrue(l_actual boolean) is
   begin
     assertFalse(not l_actual);
-  end assertTrue;
+  end;
 
   procedure shouldGetValueForOneEntry is
     l_map t_map := t_map();
@@ -59,13 +59,13 @@ is
     l_map.put('key1', 'value1');
 
     assert('value1', l_map.get('key1'));
-  end shouldGetValueForOneEntry;
+  end;
 
   procedure shouldGetNullOnEmpty is
     l_map t_map := t_map();
   begin
     assert(null, l_map.get('key1'));
-  end shouldGetNullOnEmpty;
+  end;
 
   procedure shouldGetValueForMoreEntries is
     l_map t_map := t_map();
@@ -75,7 +75,7 @@ is
 
     assert('value1', l_map.get('key1'));
     assert('value2', l_map.get('key2'));
-  end shouldGetValueForMoreEntries;
+  end;
 
   procedure shouldGetNullValue is
     l_map t_map := t_map();
@@ -83,7 +83,7 @@ is
     l_map.put('key1', null);
 
     assert(null, l_map.get('key1'));
-  end shouldGetNullValue;
+  end;
 
   procedure shouldOverrideValue is
     l_map t_map := t_map();
@@ -92,7 +92,7 @@ is
     l_map.put('key1', 'value2');
 
     assert('value2', l_map.get('key1'));
-  end shouldOverrideValue;
+  end;
 
   procedure shouldReturnOverwrittenValue is
     l_map t_map := t_map();
@@ -100,7 +100,7 @@ is
     assert(null, l_map.put('key1', 'value1'));
     assert('value1', l_map.put('key1', 'value2'));
     assert('value2', l_map.get('key1'));
-  end shouldReturnOverwrittenValue;
+  end;
 
   procedure shouldRemoveValue is
     l_map t_map := t_map();
@@ -111,7 +111,7 @@ is
     l_map.remove('key1');
 
     assertFalse(l_map.containsKey('key1'));
-  end shouldRemoveValue;
+  end;
 
   procedure shouldReturnRemovedValue is
     l_map t_map := t_map();
@@ -119,7 +119,7 @@ is
     l_map.put('key1', 'value1');
 
     assert('value1', l_map.remove('key1'));
-  end shouldReturnRemovedValue;
+  end;
 
   procedure shouldClearMap is
     l_map t_map := t_map();
@@ -129,7 +129,7 @@ is
     l_map.clear();
 
     assertFalse(l_map.containsKey('key1'));
-  end shouldClearMap;
+  end;
 
   procedure shouldContainsKey is
     l_map t_map := t_map();
@@ -137,13 +137,13 @@ is
     l_map.put('key1', 'value1');
 
     assertTrue(l_map.containsKey('key1'));
-  end shouldContainsKey;
+  end;
 
   procedure shouldNotContainsKey is
     l_map t_map := t_map();
   begin
     assertFalse(l_map.containsKey('key1'));
-  end shouldNotContainsKey;
+  end;
 
   procedure shouldContainsNullKey is
     l_map t_map := t_map();
@@ -151,13 +151,13 @@ is
     l_map.put(null, 'value1');
 
     assertTrue(l_map.containsKey(null));
-  end shouldContainsNullKey;
+  end;
 
   procedure shouldNotContainsNullKey is
     l_map t_map := t_map();
   begin
     assertFalse(l_map.containsKey(null));
-  end shouldNotContainsNullKey;
+  end;
 
   procedure shouldContainsValue is
     l_map t_map := t_map();
@@ -165,13 +165,13 @@ is
     l_map.put('key1', 'value1');
 
     assertTrue(l_map.containsValue('value1'));
-  end shouldContainsValue;
+  end;
 
   procedure shouldNotContainsValue is
     l_map t_map := t_map();
   begin
     assertFalse(l_map.containsValue('value1'));
-  end shouldNotContainsValue;
+  end;
 
   procedure shouldContainsNullValue is
     l_map t_map := t_map();
@@ -179,13 +179,13 @@ is
     l_map.put('key1', null);
 
     assertTrue(l_map.containsValue(null));
-  end shouldContainsNullValue;
+  end;
 
   procedure shouldNotContainsNullValue is
     l_map t_map := t_map();
   begin
     assertFalse(l_map.containsValue(null));
-  end shouldNotContainsNullValue;
+  end;
 
   procedure shouldReturnEntryCount is
     l_map t_map := t_map();
@@ -195,13 +195,13 @@ is
     l_map.put('key1', 'value1a');
 
     assert('2', l_map.entryCount());
-  end shouldReturnEntryCount;
+  end;
 
   procedure shouldBeEmpty is
     l_map t_map := t_map();
   begin
     assertTrue(l_map.isEmpty());
-  end shouldBeEmpty;
+  end;
 
   procedure shouldBeNotEmpty is
     l_map t_map := t_map();
@@ -209,7 +209,7 @@ is
     l_map.put('key1', 'value1');
 
     assertFalse(l_map.isEmpty());
-  end shouldBeNotEmpty;
+  end;
 
   procedure shouldGetValueForNullKey is
     l_map t_map := t_map();
@@ -217,7 +217,7 @@ is
     l_map.put(null, 'value1');
 
     assert('value1', l_map.get(null));
-  end shouldGetValueForNullKey;
+  end;
 
   procedure shouldGetFirstValue is
     l_map t_map := t_map();
@@ -230,7 +230,7 @@ is
 
     assert('key1', l_entry.getKey());
     assert('value1', l_entry.getValue());
-  end shouldGetFirstValue;
+  end;
 
   procedure shouldGetFirstValueAfterRemove is
     l_map t_map := t_map();
@@ -245,7 +245,7 @@ is
 
     assert('key2', l_entry.getKey());
     assert('value2', l_entry.getValue());
-  end shouldGetFirstValueAfterRemove;
+  end;
 
   procedure shouldIterate is
     l_map t_map := t_map();
@@ -270,7 +270,7 @@ is
     l_entry := l_map.nextEntry();
     assert('key3', l_entry.getKey());
     assert('value3', l_entry.getValue());
-  end shouldIterate;
+  end;
 
   procedure shouldIterateWithRemoveNext is
     l_map t_map := t_map();
@@ -287,7 +287,7 @@ is
 
     assert('key3', l_entry.getKey());
     assert('value3', l_entry.getValue());
-  end shouldIterateWithRemoveNext;
+  end;
 
   procedure shouldIterateWithRemovePrev is
     l_map t_map := t_map();
@@ -304,7 +304,7 @@ is
 
     assert('key2', l_entry.getKey());
     assert('value2', l_entry.getValue());
-  end shouldIterateWithRemovePrev;
+  end;
 
   procedure shouldResetIteration is
     l_map t_map := t_map();
@@ -330,7 +330,7 @@ is
     l_entry := l_map.nextEntry();
     assert('key1', l_entry.getKey());
     assert('value1', l_entry.getValue());
-  end shouldResetIteration;
+  end;
 
   procedure shouldRemoveWhileIteration is
     l_map t_map := t_map();
@@ -360,7 +360,7 @@ is
 
     assertFalse(l_map.containsKey('key2'));
     assertFalse(l_map.containsKey('key3'));
-  end shouldRemoveWhileIteration;
+  end;
 
   procedure shouldRemoveCurrentNotInitial is
     l_map t_map := t_map();
@@ -371,13 +371,13 @@ is
 
     l_map.removeCurrent();
     assertFalse(l_map.containsKey('key1'));
-  end shouldRemoveCurrentNotInitial;
+  end;
 
   procedure shouldRemoveNothingOnEmptyMap is
     l_map t_map := t_map();
   begin
     l_map.removeCurrent();
-  end shouldRemoveNothingOnEmptyMap;
+  end;
 
   procedure shouldRemoveTwiceButDoNothing is
     l_map t_map := t_map();
@@ -412,7 +412,7 @@ is
 
     assertFalse(l_map.containsKey('key2'));
     assertFalse(l_map.containsKey('key3'));
-  end shouldRemoveTwiceButDoNothing;
+  end;
 
   procedure shouldNotEditMapOnChangeEntry is
     l_map t_map := t_map();
@@ -423,8 +423,20 @@ is
     l_entry := l_map.firstEntry();
     l_entry.m_value := 'value2';
 
-    assert('value1', l_map.get('key1'));
-  end shouldNotEditMapOnChangeEntry;
+    assert('value1', l_map.get('key2'));
+  end;
+
+  procedure shouldEditMapOnChangeEntry is
+    l_map t_map := t_map();
+  begin
+    l_map.put('key1', 'value1');
+
+    l_map.iterate();
+    l_map.nextEntry();
+    l_map.setCurrentValue('value2');
+
+    assert('value1', l_map.get('key2'));
+  end;
 
   procedure test is
   begin
@@ -460,8 +472,9 @@ is
     shouldRemoveNothingOnEmptyMap();
     shouldRemoveTwiceButDoNothing();
     shouldNotEditMapOnChangeEntry();
+    shouldEditMapOnChangeEntry();
 
     dbms_output.put_line('all test successful');
-  end test;
+  end;
 end;
 /

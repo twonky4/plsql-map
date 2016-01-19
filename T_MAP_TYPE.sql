@@ -140,6 +140,19 @@ create or replace type t_map as object (
    * called only once per call to nextEntry(). Returns the removed entry or null, if entry already
    * deleted. If iteration is not initialed the first entry will be removed.
    */
-  member function removeCurrent(self in out t_map) return t_map_entry
+  member function removeCurrent(self in out t_map) return t_map_entry,
+
+  /**
+   * Replaces the value corresponding to this entry with the specified value. If the current entry
+   * already deleted by method removeCurrent(), nothing happens.
+   */
+  member procedure setCurrentValue(pi_value varchar2),
+
+  /**
+   * Replaces the value corresponding to this entry with the specified value. If the current entry
+   * already deleted by method removeCurrent(), nothing happens. Returns the value that was
+   * assigned before.
+   */
+  member function setCurrentValue(self in out t_map, pi_value varchar2) return varchar2
 );
 /

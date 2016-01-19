@@ -1,7 +1,8 @@
 create or replace type t_map_entry as object(
 /**
  * A map entry (key-value pair). These objects are valid only for the duration of the iteration;
- * changing values has no effect to any entry of the a map.
+ * changing values has no effect to any entry of the a map. To change the value of the current
+ * object call t_map.setCurrentValue().
  *
  * See object types: t_map, t_map_table
  */

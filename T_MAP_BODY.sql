@@ -198,5 +198,35 @@ create or replace type body t_map is
 
     return null;
   end;
+
+  member procedure setCurrentValue(pi_value varchar2) is
+    l_iterationCounter number := m_iterationCounter;
+  begin
+    if l_iterationCounter = -1 then
+      l_iterationCounter := self.m_map.first();
+    end if;
+
+    if l_iterationCounter is not null and m_map.exists(l_iterationCounter) then
+      m_map(l_iterationCounter).m_value := pi_value;
+    end if;
+  end;
+
+  member function setCurrentValue(self in out t_map, pi_value varchar2) return varchar2 is
+    l_last_value varchar2(32767);
+    l_iterationCounter number := m_iterationCounter;
+  begin
+    if l_iterationCounter = -1 then
+      l_iterationCounter := self.m_map.first();
+    end if;
+
+    if l_iterationCounter is not null and m_map.exists(l_iterationCounter) then
+      l_last_value := m_map(l_iterationCounter).getValue();
+      m_map(l_iterationCounter).m_value := pi_value;
+      
+      return l_last_value;
+    end if;
+    
+    return null;
+  end;
 end;
 /

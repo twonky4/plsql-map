@@ -71,7 +71,7 @@ begin
   -- output: ping -> pong
 end;
 ```
-### remove while iteration
+### access while iteration
 ```sql
 declare
   l_map t_map := t_map();
@@ -87,10 +87,13 @@ begin
     l_entry := l_map.nextEntry();
     if l_entry.getValue() = 'test' then
       l_map.removeCurrent();
+    else
+      l_map.setCurrentValue('fighters');
     end if;
   end loop;
 
   -- entries 2 & 3 deleted
+  -- entries 1 changed
 end;
 ```
 ### additional check methods
