@@ -222,10 +222,10 @@ create or replace type body t_map is
     if l_iterationCounter is not null and m_map.exists(l_iterationCounter) then
       l_last_value := m_map(l_iterationCounter).getValue();
       m_map(l_iterationCounter).m_value := pi_value;
-      
+
       return l_last_value;
     end if;
-    
+
     return null;
   end;
 end;
