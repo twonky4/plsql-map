@@ -107,7 +107,7 @@ begin
 
   -- contains value
   if l_map.containsValue('pong') then
-    dbms_output.put_line('value ping exists');
+    dbms_output.put_line('value pong exists');
   end if;
 
   -- is empty
