@@ -3,7 +3,6 @@ A java-like map construct. This collection type can be used in PL/SQL code also 
 My motivation was to provide a way in which i can use an iterable map within an Oracle object types.
 
 The initial code was developed at Airpas Aviation AG, who kindly assented to its publication.
-
 ## Installation
 Execute the content of the files in the following order:
 * T_MAP_ENTRY_TYPE.sql
@@ -13,7 +12,6 @@ Execute the content of the files in the following order:
 * T_MAP_BODY.sql
 
 Note: To update the underlying type `t_map_entry` the types `t_map_table` and `t_map` needs to be deleted.
-
 ## Usage
 ### Simple use
 ```sql
@@ -73,8 +71,7 @@ begin
   -- output: ping -> pong
 end;
 ```
-
-### remove While iteration
+### remove while iteration
 ```sql
 declare
   l_map t_map := t_map();
@@ -94,6 +91,32 @@ begin
   end loop;
 
   -- entries 2 & 3 deleted
+end;
+```
+### additional check methods
+```sql
+declare
+  l_map t_map := t_map();
+begin
+  l_map.put('ping', 'pong');
+
+  -- contains key
+  if l_map.containsKey('ping') then
+    dbms_output.put_line('key ping exists');
+  end if;
+
+  -- contains value
+  if l_map.containsValue('pong') then
+    dbms_output.put_line('value ping exists');
+  end if;
+
+  -- is empty
+  if not l_map.isEmpty() then
+    dbms_output.put_line('map is not empty');
+  end if;
+
+  -- entry count
+  dbms_output.put_line(l_map.entryCount || ' map entries exists');
 end;
 ```
 ## Test
