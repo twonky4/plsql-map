@@ -38,7 +38,7 @@ declare
 begin
   l_map.put('foo', 'bar');
   l_map.put('ping', 'pong');
-    
+
   l_map.iterate(); -- to reset pointer that changed by previous iteration, optional
   while l_map.hasNextEntry()
   loop
@@ -120,6 +120,12 @@ begin
 
   -- entry count
   dbms_output.put_line(l_map.entryCount() || ' map entries exists');
+
+  -- output:
+  -- key ping exists
+  -- value pong exists
+  -- map is not empty
+  -- 1 map entries exists
 end;
 ```
 ## Test
