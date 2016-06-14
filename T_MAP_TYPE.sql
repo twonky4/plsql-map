@@ -153,6 +153,12 @@ create or replace type t_map as object (
    * already deleted by method removeCurrent(), nothing happens. Returns the value that was
    * assigned before.
    */
-  member function setCurrentValue(self in out t_map, pi_value varchar2) return varchar2
+  member function setCurrentValue(self in out t_map, pi_value varchar2) return varchar2,
+
+  /**
+   * Convert the object into nested table. Use in queries in combination with oracle function
+   * table().
+   */
+  member function asTable return t_map_table
 );
 /

@@ -455,6 +455,21 @@ is
     assertFalse(l_map.containsValue('value1'));
   end;
 
+  procedure shouldUseAsTable is
+    l_map t_map := t_map();
+    l_value varchar2(32767);
+  begin
+    l_map.put('key1', 'value1');
+    l_map.put('key2', 'value2');
+
+    select m_value
+    into   l_value
+    from   table(l_map.asTable())
+    where  m_key = 'key2';
+
+    assert('value2', l_value);
+  end;
+
   procedure test is
   begin
     shouldGetValueForOneEntry();
@@ -491,6 +506,7 @@ is
     shouldNotEditMapOnChangeEntry();
     shouldEditMapOnChangeEntry();
     shouldNotEditRemovedEntry();
+    shouldUseAsTable();
 
     dbms_output.put_line('all test successful');
   end;

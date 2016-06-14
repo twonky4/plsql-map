@@ -29,7 +29,27 @@ begin
   l_map.remove('foo');
 end;
 ```
-### To iterate through the map you can use two ways
+### Using in queries
+```sql
+declare
+  l_map t_map := t_map();
+  l_value varchar2(32767);
+begin
+  l_map.put('key1', 'value1');
+  l_map.put('key2', 'value2');
+
+  -- use asTable() function with table()
+  select m_value
+  into   l_value
+  from   table(l_map.asTable())
+  where  m_key = 'key2';
+
+  dbms_output.put_line('value for key2 is '|| l_value);
+
+  -- output: value for key2 is value2
+end;
+```
+### To iterate through the map you can use three ways
 #### while
 ```sql
 declare
@@ -65,6 +85,26 @@ begin
 
     exit when not l_map.hasNextEntry();
     l_entry := l_map.nextEntry();
+  end loop;
+
+  -- output: foo -> bar
+  -- output: ping -> pong
+end;
+```
+#### enhanced loop using query
+```sql
+declare
+  l_map t_map := t_map();
+  l_entry t_map_entry;
+begin
+  l_map.put('foo', 'bar');
+  l_map.put('ping', 'pong');
+
+  for l_entry in (
+    select m_key, m_value
+    from   table(l_map.asTable())
+  ) loop
+    dbms_output.put_line(l_entry.m_key || ' -> ' || l_entry.m_value);
   end loop;
 
   -- output: foo -> bar

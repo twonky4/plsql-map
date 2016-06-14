@@ -228,5 +228,10 @@ create or replace type body t_map is
 
     return null;
   end;
+
+  member function asTable return t_map_table is
+  begin
+    return m_map;
+  end;
 end;
 /
